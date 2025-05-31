@@ -3,13 +3,79 @@ import LogoSmall from "@/components/icons/logo-small";
 import ArrowLeft from "@/components/icons/arrow-left";
 import { getPrisma } from "@/lib/prisma";
 
-function GraphSVG({ up = true }: { up?: boolean }) {
+const tileColors = [
+  {
+    name: "mint",
+    button: "bg-primaryMint hover:bg-primaryMint/90 text-white",
+    view: "border-primaryMint text-primaryMint hover:bg-primaryMint hover:text-white",
+    graph: "#32e2b1",
+    icon: "#32e2b1",
+  },
+  {
+    name: "blue",
+    button: "bg-blue-500 hover:bg-blue-600 text-white",
+    view: "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white",
+    graph: "#3b82f6",
+    icon: "#3b82f6",
+  },
+  {
+    name: "yellow",
+    button: "bg-yellow-400 hover:bg-yellow-500 text-white",
+    view: "border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-white",
+    graph: "#facc15",
+    icon: "#facc15",
+  },
+  {
+    name: "pink",
+    button: "bg-pink-400 hover:bg-pink-500 text-white",
+    view: "border-pink-400 text-pink-400 hover:bg-pink-400 hover:text-white",
+    graph: "#ec4899",
+    icon: "#ec4899",
+  },
+  {
+    name: "purple",
+    button: "bg-purple-400 hover:bg-purple-500 text-white",
+    view: "border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white",
+    graph: "#a78bfa",
+    icon: "#a78bfa",
+  },
+  {
+    name: "green",
+    button: "bg-green-400 hover:bg-green-500 text-white",
+    view: "border-green-400 text-green-400 hover:bg-green-400 hover:text-white",
+    graph: "#4ade80",
+    icon: "#4ade80",
+  },
+  {
+    name: "orange",
+    button: "bg-orange-400 hover:bg-orange-500 text-white",
+    view: "border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white",
+    graph: "#fb923c",
+    icon: "#fb923c",
+  },
+];
+
+function hashStringToIndex(str: string, max: number) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash) % max;
+}
+
+function GraphSVG({
+  up = true,
+  color = "#32e2b1",
+}: {
+  up?: boolean;
+  color?: string;
+}) {
   // More wavy, dynamic placeholder graph
   return up ? (
     <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
       <path
         d="M0 18 Q6 10 12 14 Q18 18 24 8 Q30 2 36 10 Q42 18 48 2"
-        stroke="#32e2b1"
+        stroke={color}
         strokeWidth="2"
         fill="none"
         strokeLinejoin="round"
@@ -19,7 +85,7 @@ function GraphSVG({ up = true }: { up?: boolean }) {
     <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
       <path
         d="M0 2 Q6 10 12 6 Q18 2 24 12 Q30 18 36 10 Q42 2 48 18"
-        stroke="#32e2b1"
+        stroke={color}
         strokeWidth="2"
         fill="none"
         strokeLinejoin="round"
@@ -71,6 +137,8 @@ export default async function ExplorePage() {
           const price = 0.25; // Placeholder
           const userCount = 1000; // Placeholder
           const up = userCount >= 0;
+          const colorIdx = hashStringToIndex(chat.id, tileColors.length);
+          const theme = tileColors[colorIdx];
           return (
             <div
               key={chat.id}
@@ -78,8 +146,10 @@ export default async function ExplorePage() {
             >
               {/* Logo and ticker */}
               <div className="mr-2 flex flex-col items-center">
-                <div className="bg-offWhite mb-1 flex h-12 w-12 items-center justify-center rounded border border-gray-100">
-                  <LogoSmall className="text-primaryMint h-7 w-7" />
+                <div
+                  className={`bg-offWhite mb-1 flex h-12 w-12 items-center justify-center rounded border border-gray-100`}
+                >
+                  <LogoSmall className={`h-7 w-7`} color={theme.icon} />
                 </div>
                 <span className="font-mono text-xs text-gray-400">
                   {ticker}
@@ -91,7 +161,7 @@ export default async function ExplorePage() {
                   {title}
                 </div>
                 <div className="mt-1 flex items-center gap-2">
-                  <GraphSVG up={up} />
+                  <GraphSVG up={up} color={theme.graph} />
                   <div className="ml-auto flex flex-col items-end">
                     <span className="text-jetBlack font-mono text-sm">
                       ${price.toFixed(2)}
@@ -107,11 +177,13 @@ export default async function ExplorePage() {
               <div className="ml-2 flex flex-col gap-2">
                 <Link
                   href={`/chats/${chat.id}`}
-                  className="border-primaryMint text-primaryMint hover:bg-primaryMint rounded-full border bg-white px-3 py-1 text-xs font-semibold transition hover:text-white"
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${theme.view}`}
                 >
                   View
                 </Link>
-                <button className="bg-primaryMint hover:bg-primaryMint/90 rounded-full px-3 py-1 text-xs font-semibold text-white transition">
+                <button
+                  className={`${theme.button} rounded-full px-3 py-1 text-xs font-semibold transition`}
+                >
                   Buy
                 </button>
               </div>
