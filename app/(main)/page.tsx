@@ -55,7 +55,7 @@ export default function Home() {
     .join("\n");
 
   return (
-    <div className="relative flex grow flex-col">
+    <div className="font-body relative flex grow flex-col">
       <div className="absolute inset-0 flex justify-center">
         <Image
           src={bgImg}
@@ -70,20 +70,24 @@ export default function Home() {
 
         <div className="mt-5 flex grow flex-col items-center px-4 lg:mt-16">
           <a
-            className="mb-4 inline-flex shrink-0 items-center rounded-full border-[0.5px] bg-white px-7 py-2 text-xs text-gray-800 shadow-[0px_1px_1px_0px_rgba(0,0,0,0.25)] md:text-base"
+            className="bg-offWhite text-jetBlack mb-4 inline-flex shrink-0 items-center rounded-full border-[0.5px] px-7 py-2 text-xs shadow-[0px_1px_1px_0px_rgba(0,0,0,0.25)] md:text-base"
             href="https://togetherai.link/?utm_source=llamacoder&utm_medium=referral&utm_campaign=example-app"
             target="_blank"
           >
             <span className="text-center">
-              Tokenizing <span className="font-semibold">imagination</span>,
-              powering <span className="font-semibold">builders</span>
+              Tokenizing{" "}
+              <span className="text-primaryMint font-semibold">
+                imagination
+              </span>
+              , powering{" "}
+              <span className="text-primaryMint font-semibold">builders</span>
             </span>
           </a>
 
-          <h1 className="mt-4 text-balance text-center text-4xl leading-none text-gray-700 md:text-[64px] lg:mt-8">
-            Mint your <span className="text-blue-500">idea</span>
+          <h1 className="text-jetBlack font-heading mt-4 text-balance text-center text-4xl leading-none md:text-[64px] lg:mt-8">
+            Mint your <span className="text-primaryMint">idea</span>
             <br className="hidden md:block" /> into a{" "}
-            <span className="text-blue-500">$zapp</span>
+            <span className="text-blueAccent">$zapp</span>
           </h1>
 
           <form
@@ -193,7 +197,7 @@ export default function Home() {
                       value={model}
                       onValueChange={setModel}
                     >
-                      <Select.Trigger className="inline-flex items-center gap-1 rounded-md p-1 text-sm text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-300">
+                      <Select.Trigger className="hover:text-jetBlack focus-visible:outline-primaryMint inline-flex items-center gap-1 rounded-md p-1 text-sm text-gray-400 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2">
                         <Select.Value aria-label={model}>
                           <span>{selectedModel?.label}</span>
                         </Select.Value>
@@ -214,7 +218,7 @@ export default function Home() {
                                   {m.label}
                                 </Select.ItemText>
                                 <Select.ItemIndicator>
-                                  <CheckIcon className="size-3 text-blue-600" />
+                                  <CheckIcon className="text-primaryMint size-3" />
                                 </Select.ItemIndicator>
                               </Select.Item>
                             ))}
@@ -232,7 +236,7 @@ export default function Home() {
                       value={quality}
                       onValueChange={setQuality}
                     >
-                      <Select.Trigger className="inline-flex items-center gap-1 rounded p-1 text-sm text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-300">
+                      <Select.Trigger className="hover:text-jetBlack focus-visible:outline-primaryMint inline-flex items-center gap-1 rounded p-1 text-sm text-gray-400 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2">
                         <Select.Value aria-label={quality}>
                           <span className="max-sm:hidden">
                             {quality === "low"
@@ -266,7 +270,7 @@ export default function Home() {
                                   {q.label}
                                 </Select.ItemText>
                                 <Select.ItemIndicator>
-                                  <CheckIcon className="size-3 text-blue-600" />
+                                  <CheckIcon className="text-primaryMint size-3" />
                                 </Select.ItemIndicator>
                               </Select.Item>
                             ))}
@@ -302,10 +306,10 @@ export default function Home() {
                   </div>
 
                   <div className="relative flex shrink-0 has-[:disabled]:opacity-50">
-                    <div className="pointer-events-none absolute inset-0 -bottom-[1px] rounded bg-blue-500" />
+                    <div className="bg-primaryMint pointer-events-none absolute inset-0 -bottom-[1px] rounded" />
 
                     <LoadingButton
-                      className="relative inline-flex size-6 items-center justify-center rounded bg-blue-500 font-medium text-white shadow-lg outline-blue-300 hover:bg-blue-500/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                      className="bg-primaryMint outline-primaryMint hover:bg-primaryMint/75 relative inline-flex size-6 items-center justify-center rounded font-medium text-white shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       type="submit"
                     >
                       <ArrowRightIcon />

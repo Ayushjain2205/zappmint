@@ -13,7 +13,17 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Aeonik"', ...defaultTheme.fontFamily.sans],
+        heading: ['"Space Grotesk"', '"Sora"', ...defaultTheme.fontFamily.sans],
+        body: [
+          '"Plus Jakarta Sans"',
+          '"Inter"',
+          ...defaultTheme.fontFamily.sans,
+        ],
+        sans: [
+          '"Plus Jakarta Sans"',
+          '"Inter"',
+          ...defaultTheme.fontFamily.sans,
+        ],
         mono: ['"Aeonik Mono"', ...defaultTheme.fontFamily.mono],
       },
       borderRadius: {
@@ -22,6 +32,14 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        primaryMint: "#32E2B1",
+        jetBlack: "#1E1E1E",
+        offWhite: "#F8F9FA",
+        blueAccent: {
+          DEFAULT: "#377DFF",
+          light: "#3A8DFF",
+        },
+        softLilac: "#B18DF0",
         brand: "#E1E7EC",
         blue: {
           "300": "#94b2fa",

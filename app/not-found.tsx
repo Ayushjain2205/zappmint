@@ -2,7 +2,7 @@ import Header from "@/components/header";
 
 export default function Page() {
   return (
-    <body className="flex min-h-full flex-col bg-gray-100 text-gray-900 antialiased">
+    <body className="bg-offWhite text-jetBlack flex min-h-full flex-col antialiased">
       <div className="flex grow flex-col">
         <Header />
         <div className="flex grow items-center justify-center">

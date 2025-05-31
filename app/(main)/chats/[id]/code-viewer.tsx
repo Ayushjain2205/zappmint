@@ -76,31 +76,34 @@ export default function CodeViewer({
 
   return (
     <>
-      <div className="flex h-16 shrink-0 items-center justify-between border-b border-gray-300 px-4">
-        <div className="inline-flex items-center gap-4">
+      <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4">
+        <div className="inline-flex min-w-0 flex-nowrap items-center gap-4">
           <button
-            className="text-gray-400 hover:text-gray-700"
+            className="text-muted-foreground hover:text-foreground focus-visible:text-foreground"
             onClick={onClose}
           >
             <CloseIcon className="size-5" />
           </button>
-          <span>
+          <span
+            className="max-w-[40vw] truncate text-foreground sm:max-w-xs"
+            title={title}
+          >
             {title} v{currentVersion + 1}
           </span>
         </div>
         {layout === "tabbed" && (
-          <div className="rounded-lg border-2 border-gray-300 p-1">
+          <div className="rounded-lg border-2 border-border p-1">
             <button
               onClick={() => onTabChange("code")}
               data-active={activeTab === "code" ? true : undefined}
-              className="inline-flex h-7 w-16 items-center justify-center rounded text-xs font-medium data-[active]:bg-blue-500 data-[active]:text-white"
+              className="data-[active]:bg-primaryMint inline-flex h-7 w-16 items-center justify-center rounded text-xs font-medium data-[active]:text-primary-foreground"
             >
               Code
             </button>
             <button
               onClick={() => onTabChange("preview")}
               data-active={activeTab === "preview" ? true : undefined}
-              className="inline-flex h-7 w-16 items-center justify-center rounded text-xs font-medium data-[active]:bg-blue-500 data-[active]:text-white"
+              className="data-[active]:bg-primaryMint inline-flex h-7 w-16 items-center justify-center rounded text-xs font-medium data-[active]:text-primary-foreground"
             >
               Preview
             </button>
