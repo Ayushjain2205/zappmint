@@ -24,38 +24,29 @@ export const MODELS = [
 
 export const SUGGESTED_PROMPTS = [
   {
-    title: "Quiz app",
+    title: "To-Do List",
     description:
-      "Make me a quiz app about American history. Make sure to give the user an explanation on each question whether they got it right or wrong and keep a score going",
+      "A simple to-do list app where users can add, check off, and delete tasks.",
   },
   {
-    title: "SaaS Landing page",
-    description:
-      "A landing page for a SaaS business that includes a clear value proposition in a prominent hero section, concise feature overviews, testimonials, pricing, and a clear call-to-action button leading to a free trial or demo.",
+    title: "Weather App",
+    description: "Show the current weather and a 5-day forecast for any city.",
   },
   {
-    title: "Pomodoro Timer",
-    description:
-      "Make a beautiful pomodoro timer where I can adjust the lengths of the focus time and the break and it will beep when done.",
+    title: "Notes App",
+    description: "A notes app where users can write, edit, and delete notes.",
   },
   {
-    title: "Blog app",
-    description:
-      "Make me a blog app that has a few blogs there for people to read. Users can click into the blogs and read them, then go back to the homepage to see more.",
-  },
-  // {
-  //   title: "Recipe site",
-  //   description:
-  //     "Make me a site that has easy to make recipes in a grid that you can click into and see the full recipe. Also make it possible for me to add my own",
-  // },
-  {
-    title: "Flashcard app",
-    description:
-      "Build me a flashcard app about llamas. Have some flash cards and also have the ability for users to add their own. Show one side of a card at first and reveal the answer on button click, keeping track of correct guesses to measure progress.",
+    title: "Expense Tracker",
+    description: "Track daily expenses with categories and a simple summary.",
   },
   {
-    title: "Timezone dashboard",
+    title: "Habit Tracker",
     description:
-      "Make me a time zone dashboard that shows me the time zone in the top 6 most popular time zones and gives me a dropdown to add others",
+      "Let users add habits and check them off each day to build streaks.",
+  },
+  {
+    title: "Recipe Book",
+    description: "A recipe book app to save, view, and search for recipes.",
   },
 ];
