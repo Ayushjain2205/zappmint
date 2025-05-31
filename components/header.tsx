@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import GithubIcon from "@/components/icons/github-icon";
-import logo from "@/public/logo.png";
+import logo from "@/public/new_logo.png";
 import Link from "next/link";
 
 export default function Header() {
@@ -12,7 +12,7 @@ export default function Header() {
           src={logo}
           alt=""
           quality={100}
-          className="mx-auto h-9 object-contain"
+          className="mx-auto h-20 object-contain"
           priority
         />
       </Link>
