@@ -333,6 +333,36 @@ export default function Home() {
               </Fieldset>
             </form>
           </div>
+
+          {/* Explore Section/Button - now sticky and subtle at the bottom as a full-width panel */}
+          <Link
+            href="/explore"
+            className="bg-primaryMint border-primaryMint hover:bg-primaryMint/90 fixed bottom-0 left-0 z-30 flex w-full items-center justify-center border-t py-3 text-base font-medium text-white shadow-sm transition focus-visible:outline-none"
+            style={{ letterSpacing: 0.5 }}
+          >
+            <span className="inline-flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.59 14.37a5.25 5.25 0 11-7.44-7.44 5.25 5.25 0 017.44 7.44z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.5 8.25v-1.5a2.25 2.25 0 00-2.25-2.25h-1.5M21 21l-4.35-4.35"
+                />
+              </svg>
+              <span>Explore Zapps</span>
+            </span>
+          </Link>
         </div>
       </div>
     </div>
