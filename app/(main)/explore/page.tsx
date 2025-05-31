@@ -1,36 +1,7 @@
 import Link from "next/link";
 import LogoSmall from "@/components/icons/logo-small";
 import ArrowLeft from "@/components/icons/arrow-left";
-
-const mockZapps = [
-  {
-    id: 1,
-    title: "Budget Tracker",
-    ticker: "BUDG",
-    coinValue: 1200,
-    price: 0.25,
-    userCount: 3421,
-    image: null,
-  },
-  {
-    id: 2,
-    title: "Workout Planner",
-    ticker: "WORK",
-    coinValue: 950,
-    price: 0.18,
-    userCount: 1287,
-    image: null,
-  },
-  {
-    id: 3,
-    title: "Recipe Finder",
-    ticker: "RECI",
-    coinValue: 800,
-    price: 0.12,
-    userCount: 876,
-    image: null,
-  },
-];
+import { getPrisma } from "@/lib/prisma";
 
 function GraphSVG({ up = true }: { up?: boolean }) {
   // More wavy, dynamic placeholder graph
@@ -71,7 +42,11 @@ function UserIcon() {
   );
 }
 
-export default function ExplorePage() {
+export default async function ExplorePage() {
+  const prisma = getPrisma();
+  const chats = await prisma.chat.findMany({ orderBy: { createdAt: "desc" } });
+  console.log("Fetched chats from DB:", chats);
+
   return (
     <div className="bg-offWhite min-h-screen px-2 pb-20 pt-6">
       <div className="mx-auto mb-4 flex max-w-4xl items-center">
@@ -86,11 +61,19 @@ export default function ExplorePage() {
         </h1>
       </div>
       <div className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
-        {mockZapps.map((zapp) => {
-          const up = zapp.userCount >= 0;
+        {chats.map((chat) => {
+          const title = chat.title || chat.prompt || "Untitled App";
+          const ticker =
+            title
+              .replace(/[^A-Za-z0-9]/g, "")
+              .toUpperCase()
+              .slice(0, 4) || "ZAPP";
+          const price = 0.25; // Placeholder
+          const userCount = 1000; // Placeholder
+          const up = userCount >= 0;
           return (
             <div
-              key={zapp.id}
+              key={chat.id}
               className="flex min-h-[64px] items-center gap-3 rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-sm"
             >
               {/* Logo and ticker */}
@@ -99,23 +82,23 @@ export default function ExplorePage() {
                   <LogoSmall className="text-primaryMint h-7 w-7" />
                 </div>
                 <span className="font-mono text-xs text-gray-400">
-                  {zapp.ticker}
+                  {ticker}
                 </span>
               </div>
               {/* Main info */}
               <div className="min-w-0 flex-1">
                 <div className="text-jetBlack truncate text-base font-semibold">
-                  {zapp.title}
+                  {title}
                 </div>
                 <div className="mt-1 flex items-center gap-2">
                   <GraphSVG up={up} />
                   <div className="ml-auto flex flex-col items-end">
                     <span className="text-jetBlack font-mono text-sm">
-                      ${zapp.price.toFixed(2)}
+                      ${price.toFixed(2)}
                     </span>
                     <span className="mt-0.5 flex items-center gap-1 font-mono text-xs text-gray-500">
                       <UserIcon />
-                      {zapp.userCount}
+                      {userCount}
                     </span>
                   </div>
                 </div>
@@ -123,7 +106,7 @@ export default function ExplorePage() {
               {/* Actions */}
               <div className="ml-2 flex flex-col gap-2">
                 <Link
-                  href={`/chats/${zapp.id}`}
+                  href={`/chats/${chat.id}`}
                   className="border-primaryMint text-primaryMint hover:bg-primaryMint rounded-full border bg-white px-3 py-1 text-xs font-semibold transition hover:text-white"
                 >
                   View
