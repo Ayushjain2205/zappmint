@@ -16,6 +16,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { useNotification, useTransactionPopup } from "@blockscout/app-sdk";
+
+const DUMMY_WALLET_ADDRESS = "0x1234567890abcdef1234567890abcdef12345678";
+const MERITS_API_KEY = process.env.MERITS_API_KEY;
 
 export default function BuyDialog({
   ticker,
@@ -30,6 +34,8 @@ export default function BuyDialog({
 }) {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("10");
+  const { openTxToast } = useNotification();
+  const { openPopup } = useTransactionPopup();
   // Mock price data
   const priceData = [
     { time: "9:00", price: 0.22 },
@@ -40,6 +46,36 @@ export default function BuyDialog({
     { time: "14:00", price: 0.26 },
     { time: "15:00", price: 0.25 },
   ];
+
+  async function rewardMerits() {
+    try {
+      await fetch(
+        "https://merits-staging.blockscout.com/partner/api/v1/distribute",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "*/*",
+            Authorization: `Bearer ${MERITS_API_KEY}`,
+          },
+          body: JSON.stringify({
+            id: `zappmint_buy-${Date.now()}`,
+            description: "Reward for buying a Zapp coin",
+            distributions: [{ address: DUMMY_WALLET_ADDRESS, amount: "10" }],
+            create_missing_accounts: true,
+            expected_total: "10",
+          }),
+        },
+      );
+      // Show Blockscout toast for World Sepolia (chainId 11155111)
+      const txHash =
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+      openTxToast("11155111", txHash);
+    } catch (e) {
+      alert("Failed to reward Merits");
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -117,9 +153,10 @@ export default function BuyDialog({
               </div>
               <form
                 className="mt-4 flex w-full flex-col gap-5"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   setOpen(false);
+                  await rewardMerits();
                 }}
               >
                 <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
@@ -141,6 +178,18 @@ export default function BuyDialog({
                     className="bg-primaryMint hover:bg-primaryMint/90 focus:ring-primaryMint/40 mt-2 w-full rounded-lg px-4 py-2 text-lg font-semibold text-white shadow-md transition focus:outline-none focus:ring-2"
                   >
                     Buy
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openPopup({
+                        chainId: "11155111",
+                        address: DUMMY_WALLET_ADDRESS,
+                      })
+                    }
+                    className="text-primaryMint mt-2 w-full rounded-lg bg-transparent px-4 py-2 underline"
+                  >
+                    View My Transactions
                   </button>
                 </DialogFooter>
               </form>
