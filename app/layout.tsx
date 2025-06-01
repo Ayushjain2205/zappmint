@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
 
-let title = "Zappmint – AI Code Generator";
+let title = "Zappmint –  Mint your idea";
 let description = "Generate your next app with Llama 3.1 405B";
 let url = "https://zappmint.com/";
 let ogimage = "https://zappmint.com/og-image.png";

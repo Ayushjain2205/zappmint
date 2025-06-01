@@ -86,7 +86,8 @@ export default function CodeViewer({
   const [refresh, setRefresh] = useState(0);
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"form" | "loading" | "success">("form");
-  const [details, setDetails] = useState({ name: "", symbol: "" });
+  const [details, setDetails] = useState({ name: "", ticker: "" });
+  const [publicPercent, setPublicPercent] = useState("25");
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -114,7 +115,8 @@ export default function CodeViewer({
     setOpen(val);
     if (!val) {
       setStep("form");
-      setDetails({ name: "", symbol: "" });
+      setDetails({ name: "", ticker: "" });
+      setPublicPercent("25");
     }
   }
 
@@ -257,7 +259,8 @@ export default function CodeViewer({
 function MintButton({ disabled }: { disabled?: boolean }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"form" | "loading" | "success">("form");
-  const [details, setDetails] = useState({ name: "", symbol: "" });
+  const [details, setDetails] = useState({ name: "", ticker: "" });
+  const [publicPercent, setPublicPercent] = useState("25");
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -285,7 +288,8 @@ function MintButton({ disabled }: { disabled?: boolean }) {
     setOpen(val);
     if (!val) {
       setStep("form");
-      setDetails({ name: "", symbol: "" });
+      setDetails({ name: "", ticker: "" });
+      setPublicPercent("25");
     }
   }
 
@@ -311,17 +315,21 @@ function MintButton({ disabled }: { disabled?: boolean }) {
           className="ring-primaryMint/20 relative mx-auto w-full max-w-md overflow-hidden rounded-2xl bg-white p-0 shadow-2xl ring-1"
           style={{ zIndex: 1002 }}
         >
-          <div className="from-primaryMint/10 flex flex-col items-center justify-center bg-gradient-to-b to-white pb-2 pt-8">
-            <div className="mb-2 flex items-center justify-center">
-              <span className="animate-bounce text-5xl drop-shadow-lg">🪙</span>
+          {step === "form" && (
+            <div className="from-primaryMint/10 flex flex-col items-center justify-center bg-gradient-to-b to-white pb-2 pt-8">
+              <div className="mb-2 flex items-center justify-center">
+                <span className="animate-bounce text-5xl drop-shadow-lg">
+                  🪙
+                </span>
+              </div>
+              <h2 className="font-heading text-primaryMint mb-1 text-2xl font-bold">
+                Mint your Zapp Coin
+              </h2>
+              <p className="mb-2 text-sm text-gray-500">
+                Create your own $Zapp coin and join the builder economy!
+              </p>
             </div>
-            <h2 className="font-heading text-primaryMint mb-1 text-2xl font-bold">
-              Mint your Zapp Coin
-            </h2>
-            <p className="mb-2 text-sm text-gray-500">
-              Create your own $Zapp coin and join the builder economy!
-            </p>
-          </div>
+          )}
           <div className="px-8 pb-8 pt-2">
             {step === "form" && (
               <form onSubmit={handleMint} className="flex flex-col gap-5">
@@ -338,20 +346,34 @@ function MintButton({ disabled }: { disabled?: boolean }) {
                   />
                 </label>
                 <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
-                  Symbol
+                  Ticker
                   <input
                     className="border-primaryMint/40 focus:border-primaryMint focus:ring-primaryMint/30 rounded-lg border px-3 py-2 text-base uppercase transition focus:ring-2"
                     required
-                    value={details.symbol}
+                    value={details.ticker}
                     onChange={(e) =>
                       setDetails({
                         ...details,
-                        symbol: e.target.value.toUpperCase(),
+                        ticker: e.target.value.toUpperCase(),
                       })
                     }
                     placeholder="ZAPP"
                     maxLength={6}
                   />
+                </label>
+                <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
+                  Public Listing Percentage
+                  <select
+                    className="border-primaryMint/40 focus:border-primaryMint focus:ring-primaryMint/30 rounded-lg border px-3 py-2 text-base transition focus:ring-2"
+                    value={publicPercent}
+                    onChange={(e) => setPublicPercent(e.target.value)}
+                  >
+                    <option value="10">10%</option>
+                    <option value="25">25%</option>
+                    <option value="50">50%</option>
+                    <option value="75">75%</option>
+                    <option value="100">100%</option>
+                  </select>
                 </label>
                 <DialogFooter>
                   <button
@@ -368,7 +390,14 @@ function MintButton({ disabled }: { disabled?: boolean }) {
                 <span className="animate-spin-slow text-5xl">🪙</span>
                 <Spinner className="size-8" />
                 <div className="text-primaryMint mt-2 text-center text-lg font-semibold">
-                  Minting your Zapp coin...
+                  {details.ticker ? (
+                    <>
+                      Minting{" "}
+                      <span className="font-bold">${details.ticker}</span>...
+                    </>
+                  ) : (
+                    "Minting your Zapp coin..."
+                  )}
                 </div>
                 <div className="text-center text-sm text-gray-400">
                   This may take up to 10 seconds
@@ -391,9 +420,13 @@ function MintButton({ disabled }: { disabled?: boolean }) {
                 <div className="text-center text-lg text-gray-700">
                   Your Zapp coin{" "}
                   <span className="text-primaryMint font-bold">
-                    {details.name} ({details.symbol})
+                    {details.name} ({details.ticker})
                   </span>{" "}
                   has been minted.
+                  <br />
+                  <span className="text-base text-gray-500">
+                    {publicPercent}% of tokens will be listed publicly.
+                  </span>
                 </div>
                 <button
                   className="bg-primaryMint hover:bg-primaryMint/90 focus:ring-primaryMint/40 mt-4 w-full rounded-lg px-4 py-2 text-lg font-semibold text-white shadow-md transition focus:outline-none focus:ring-2"
