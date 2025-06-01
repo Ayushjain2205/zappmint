@@ -27,6 +27,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "@tailwindcss/typography": "^0.5.15",
     "@vercel/og": "^0.6.4",
+    "@worldcoin/minikit-js": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "dedent": "^1.5.3",
     "framer-motion": "^11.18.0",
