@@ -1,7 +1,9 @@
++"use client";
 import Link from "next/link";
 import LogoSmall from "@/components/icons/logo-small";
 import ArrowLeft from "@/components/icons/arrow-left";
 import { getPrisma } from "@/lib/prisma";
+import ExploreTiles from "./ExploreTiles";
 
 const tileColors = [
   {
@@ -126,71 +128,7 @@ export default async function ExplorePage() {
           Explore Zapps
         </h1>
       </div>
-      <div className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
-        {chats.map((chat) => {
-          const title = chat.title || chat.prompt || "Untitled App";
-          const ticker =
-            title
-              .replace(/[^A-Za-z0-9]/g, "")
-              .toUpperCase()
-              .slice(0, 4) || "ZAPP";
-          const price = 0.25; // Placeholder
-          const userCount = 1000; // Placeholder
-          const up = userCount >= 0;
-          const colorIdx = hashStringToIndex(chat.id, tileColors.length);
-          const theme = tileColors[colorIdx];
-          return (
-            <div
-              key={chat.id}
-              className="flex min-h-[64px] items-center gap-3 rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-sm"
-            >
-              {/* Logo and ticker */}
-              <div className="mr-2 flex flex-col items-center">
-                <div
-                  className={`bg-offWhite mb-1 flex h-12 w-12 items-center justify-center rounded border border-gray-100`}
-                >
-                  <LogoSmall className={`h-7 w-7`} color={theme.icon} />
-                </div>
-                <span className="font-mono text-xs text-gray-400">
-                  {ticker}
-                </span>
-              </div>
-              {/* Main info */}
-              <div className="min-w-0 flex-1">
-                <div className="text-jetBlack truncate text-base font-semibold">
-                  {title}
-                </div>
-                <div className="mt-1 flex items-center gap-2">
-                  <GraphSVG up={up} color={theme.graph} />
-                  <div className="ml-auto flex flex-col items-end">
-                    <span className="text-jetBlack font-mono text-sm">
-                      ${price.toFixed(2)}
-                    </span>
-                    <span className="mt-0.5 flex items-center gap-1 font-mono text-xs text-gray-500">
-                      <UserIcon />
-                      {userCount}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {/* Actions */}
-              <div className="ml-2 flex flex-col gap-2">
-                <Link
-                  href={`/chats/${chat.id}`}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${theme.view}`}
-                >
-                  View
-                </Link>
-                <button
-                  className={`${theme.button} rounded-full px-3 py-1 text-xs font-semibold transition`}
-                >
-                  Buy
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <ExploreTiles chats={chats} />
     </div>
   );
 }
