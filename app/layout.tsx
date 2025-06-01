@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
-import {
-  NotificationProvider,
-  TransactionPopupProvider,
-} from "@blockscout/app-sdk";
 import { MiniKitProvider } from "@worldcoin/minikit-js/minikit-provider";
 
 let title = "Zappmint –  Mint your idea";
@@ -48,11 +44,7 @@ export default function RootLayout({
         <PlausibleProvider domain="zappmint.com" />
       </head>
       <body>
-        <MiniKitProvider>
-          <NotificationProvider>
-            <TransactionPopupProvider>{children}</TransactionPopupProvider>
-          </NotificationProvider>
-        </MiniKitProvider>
+        <MiniKitProvider>{children}</MiniKitProvider>
       </body>
     </html>
   );
